@@ -1,9 +1,6 @@
 package com.fxf;
 
-import com.fxf.domain.Car;
-import com.fxf.domain.CarRepository;
-import com.fxf.domain.Owner;
-import com.fxf.domain.OwnerRepository;
+import com.fxf.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +11,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class Chapter04Application  implements CommandLineRunner {
-    private static final Logger logger = LoggerFactory.getLogger(Chapter04Application.class);
+public class Chapter05Application  implements CommandLineRunner {
+    private static final Logger logger = LoggerFactory.getLogger(Chapter05Application.class);
 
     @Autowired
     private CarRepository repository;
     @Autowired
     private OwnerRepository orepository;
+    @Autowired
+    private UserRepository urepository;
 
     public static void main(String[] args) {
-        SpringApplication.run(Chapter04Application.class, args);
+        SpringApplication.run(Chapter05Application.class, args);
     }
 
     @Override
@@ -45,6 +44,11 @@ public class Chapter04Application  implements CommandLineRunner {
         for (Car car : repository.findAll()) {
             logger.info(car.getBrand() + " " + car.getModel());
         }
+
+        urepository.save(new User("user",
+                "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER"));
+        urepository.save(new User("admin",
+                "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
     }
 
 }
